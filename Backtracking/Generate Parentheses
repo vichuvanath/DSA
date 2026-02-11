@@ -1,0 +1,84 @@
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+Example 1:
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+Example 2:
+Input: n = 1
+Output: ["()"]
+
+Approach 1(Backtracking + Valid Parenthesis(using Stacks):
+ class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        backtrack(1,n*2,res,new StringBuilder());
+        return res;
+    }
+    public void backtrack(int st,int n,List<String> res,StringBuilder sb){
+      
+        if((sb.length() > 0) && sb.charAt(0) == ')')return;
+        if(st == n+1 && !valid(new String(sb))){
+            return;
+        }
+        if(st == n+1 && valid(new String(sb))){
+            res.add(new String(sb));
+            return;
+        }
+        backtrack(st+1,n,res,sb.append('('));
+        sb.deleteCharAt(sb.length() - 1);
+        backtrack(st+1,n,res,sb.append(')'));
+        sb.deleteCharAt(sb.length() - 1);
+    }
+    public boolean valid(String s){
+        Stack<Character> stack = new Stack<>();
+        for(int i = 0 ; i < s.length() ; i++){
+            char z = s.charAt(i);
+            if(z == '('){
+                stack.push(z);
+            }
+            else{
+                if(z == ')' && stack.isEmpty() || z == ')' && stack.peek() == ')'){
+                    return false;
+                }
+                else{
+                    stack.pop();
+                }
+            }
+        }
+        return stack.isEmpty() ? true : false;
+    }
+}
+Approach 2(Breadth-First-Search):
+  class Solution {
+     private boolean isValid(String pString){
+        int leftCount = 0;
+        for (char p : pString.toCharArray()) {
+            if (p == '(') {
+                leftCount++;
+            } else {
+                leftCount--;
+            }
+            if (leftCount < 0) {
+                return false;
+            }
+        }
+        return leftCount == 0;
+    }
+    public List<String> generateParenthesis(int n) {
+       List<String> ans = new ArrayList<>();
+       Queue<String> queue = new LinkedList<>();
+       queue.offer("");
+        while(!queue.isEmpty()){
+            String s = queue.poll();
+            if(s.length() == 2*n){
+                if(isValid(s)){
+                    ans.add(s);
+                }
+            }
+            else{
+                queue.offer(s + "(");
+                queue.offer(s + ")");
+            }
+        }
+        return ans;
+    }
+}
