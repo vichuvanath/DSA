@@ -37,4 +37,5 @@ class Solution {
         return Math.min(dp[query_row][query_glass],(double)1);
     }
 }
-  
+Approach 2(Memoization):
+
