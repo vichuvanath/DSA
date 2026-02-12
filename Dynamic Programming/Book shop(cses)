@@ -1,0 +1,40 @@
+You are in a book shop which sells n different books. You know the price and number of pages of each book.
+You have decided that the total price of your purchases will be at most x. What is the maximum number of pages you can buy? You can buy each book at most once.
+Input
+The first input line contains two integers n and x: the number of books and the maximum total price.
+The next line contains n integers h_1,h_2,\ldots,h_n: the price of each book.
+The last line contains n integers s_1,s_2,\ldots,s_n: the number of pages of each book.
+Output
+Print one integer: the maximum number of pages.
+Constraints
+
+1 <= n <= 1000
+1 <= x <= 10^5
+1 <= hi, si  <= 1000
+Example
+Input:
+4 10
+4 8 5 3
+5 12 8 1
+
+Output:
+13
+Explanation: You can buy books 1 and 3. Their price is 4+5=9 and the number of pages is 5+8=13.
+Solution:
+class Main {
+    public static void main(String[] args) {
+        int t = 10;
+        int[] price = {4,8,5,3};
+        int[] page = {5,12,8,1};
+       System.out.println(calculate(t,price,page)); 
+    }
+    public static int calculate(int t,int[] price , int[] page){
+        int[] dp = new int[t+1];
+        for(int i = 0 ; i < price.length ; i++){
+            for(int j = t ; j >= price[i] ; j--){
+                dp[j] = Math.max(dp[j],page[i] + dp[j-price[i]]);
+            }
+        }
+        return dp[t];
+    }
+}
