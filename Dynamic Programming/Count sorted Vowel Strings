@@ -1,0 +1,63 @@
+https://leetcode.com/problems/count-sorted-vowel-strings/?envType=problem-list-v2&envId=math
+
+Approach(brute-force:crashes):
+class Solution {
+    Set<String> list = new HashSet<>();
+    public int countVowelStrings(int n) {
+        char[] arr = {'a','e','i','o','u'};
+        backtrack(n,arr,0,new StringBuilder());
+        System.out.println(list);
+        return list.size();
+    }
+    public void backtrack(int n,char[] arr,int ind,StringBuilder sb){
+            if(sb.length() == n){
+                list.add(new String(sb));
+                return;
+            }
+            for(int i = ind ; i < arr.length ; i++){
+                sb.append(arr[i]);
+                backtrack(n,arr,i,sb);
+                sb.deleteCharAt(sb.length()-1);
+            }
+    }
+}
+Approach(Backtracking(More optimized)):
+class Solution {
+    public int countVowelStrings(int n) {
+        char v[]={'a','e','i','o','u'};
+        return combination(0,v,new StringBuilder(),n);
+    }
+    public static int combination(int i,char v[],StringBuilder str,int n){
+           if(str.length()==n){
+              return 1;
+           }
+        int sum=0;
+           for(int j=i;j<v.length;j++){
+               str.append(v[j]);
+               sum+=combination(j,v,str,n);
+              str.deleteCharAt(str.length() - 1);
+           }
+     return sum;
+    }
+}
+Approach(Maths):
+class Solution {
+    public int countVowelStrings(int n) {
+        return (n + 4) * (n + 3) * (n + 2) * (n + 1) / 24;
+    }
+}
+Approach(Tabulation):
+class Solution {
+    public int countVowelStrings(int n) {
+        int[][] dp = new int[n + 1][6];
+         for (int j = 1; j <= 5; j++) {
+            dp[0][j] = 1;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= 5; j++) {
+                dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
+            }
+        }
+        return dp[n][5];
+    }
+}
