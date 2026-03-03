@@ -33,3 +33,44 @@ public class Main{
    }
        }
 }
+Approach-expected(TimeStamp approach):
+import java.util.*;
+public class Main{
+   public static void main(String[] args){
+      Scanner scan = new Scanner(System.in);
+      int tc = scan.nextInt();
+      while(tc-- > 0){
+      int n = scan.nextInt();
+      int[] arr = new int[n];
+      int[] add = new int[n];
+      int[] version = new int[n];
+      int nop = scan.nextInt();
+      int limit = scan.nextInt();
+      for(int i = 0 ; i < arr.length ; i++){
+         arr[i] = scan.nextInt();
+      }
+    int curr = 1;
+    while(nop-- > 0){
+        int x = scan.nextInt();
+        int y = scan.nextInt();
+        if(version[x-1] != curr){
+            version[x-1] = curr;
+            add[x-1] = 0;
+        }
+        add[x-1] +=y;
+        if(arr[x-1] +add[x-1] > limit){
+            curr++;
+        }
+    }
+      for(int i = 0 ; i < arr.length ; i++){
+        if(version[i] != curr){
+            System.out.print(arr[i] + " ");
+        }
+        else{
+            System.out.print(arr[i]+add[i] + " ");
+        }
+      }
+      System.out.println();
+   }
+       }
+}
