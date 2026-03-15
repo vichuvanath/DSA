@@ -1,0 +1,27 @@
+https://leetcode.com/problems/trapping-rain-water/submissions/1948766058/
+
+Approach(brute-force)-crashes:
+class Solution {
+    public int trap(int[] height) {
+        int sum = 0;
+
+     for(int i = 1 ; i < height.length-1 ; i++){
+        int lm = 0;
+        int rm = 0;
+
+        for(int j = 0 ; j <= i ; j++){
+                lm = Math.max(height[j],lm);
+        }
+
+        for(int j = i+1 ; j < height.length ; j++){
+                rm = Math.max(height[j],rm);
+        }
+        int mid = Math.min(lm,rm);
+        int diff = mid - height[i];
+        if(diff > 0){
+            sum+=diff;
+        }
+     }
+     return sum; 
+    }
+}
