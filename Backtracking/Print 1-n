@@ -1,0 +1,26 @@
+https://www.geeksforgeeks.org/problems/print-1-to-n-without-using-loops3621/1
+
+Approach-1-(pure Recursion):
+class Solution {
+    static void printTillN(int N) {
+        recurse(1,N);
+    }
+    public static void recurse(int st,int t){
+        if(st == t+1){
+            return;
+        }
+        System.out.print(st + " ");
+        recurse(st+1,t);
+    }
+}
+Approach-2(Backtracking):
+class Solution{
+void printNos(int n)
+{
+  if(n > 0)
+  {
+    printNos(n-1)
+    System.out.print(n + " ");
+  }
+}
+  }
