@@ -1,0 +1,28 @@
+https://leetcode.com/problems/permutations/description/
+
+Appraoch(Backtracking):
+  class Solution {
+     List<List<Integer>> list = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        int n = nums.length;
+        boolean[] vis = new boolean[n];
+        backtrack(nums,0,vis,new ArrayList<>());
+        return list;
+    }
+    public void backtrack(int[] nums, int i, boolean[] vis,List<Integer> per){
+        if(per.size() == nums.length){
+            list.add(new ArrayList<>(per));
+            return;
+        }
+        for(int j = 0;j < nums.length ; j++){
+            if(!vis[j]){
+                vis[j] = true;
+                per.add(nums[j]);
+                backtrack(nums,i,vis,per);
+                vis[j] = false;
+                per.remove(per.size()-1);
+            }
+        }
+    }
+
+}
