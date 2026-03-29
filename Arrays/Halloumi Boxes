@@ -1,0 +1,29 @@
+https://codeforces.com/problemset/problem/1903/A
+
+Approach(If the size is greater than or equal to 2 , it can be sorted):
+ import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int tc = scan.nextInt();
+        while(tc-- > 0){
+            int n = scan.nextInt();
+            int maxlen = scan.nextInt();
+            long[] arr = new long[n];
+            boolean isSorted = true;
+            for(int i = 0 ; i < n ; i++){
+                arr[i] = scan.nextLong();
+                if(i > 0 && arr[i] < arr[i-1]){
+                    isSorted = false;
+                }
+            }
+            if(isSorted || maxlen >= 2){
+                System.out.println("YES");
+            }
+            else{
+                System.out.println("NO");
+            }
+ 
+        }
+    }
+}
