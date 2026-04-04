@@ -1,0 +1,53 @@
+https://leetcode.com/problems/boats-to-save-people/
+
+Approach:
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int n = people.length;
+        int left = 0;
+        int right = n-1;
+        int res = 0;
+        while(left <= right){
+            if(people[right] == limit){
+                res++;
+                right--;
+            }
+            if(people[left]+people[right] <= limit){
+                right--;
+                left++;
+                res++;
+            }
+            else{
+                right--;
+                res++;
+            }
+
+        }
+        return res;
+    }
+}
+Optimised approach(Greedy+Two pointers):
+  class Solution { 
+    public int numRescueBoats(int[] people, int limit) {
+        int[] counting = new int[limit + 1];
+        for(int person : people) {
+            counting[person]++;
+        }
+
+        int left = 1, right = limit, boats = 0;
+        while(left <= right) {
+            while(left <= right && counting[left] <= 0) left++;
+            while(left <= right && counting[right] <= 0) right--;
+
+            if (left > right) break;
+
+            counting[right]--;
+            if (right + left <= limit) counting[left]--;
+
+            boats++;
+        }
+
+        return boats;
+    }
+}
