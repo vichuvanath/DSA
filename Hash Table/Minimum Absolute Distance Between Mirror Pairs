@@ -1,0 +1,25 @@
+https://leetcode.com/problems/minimum-absolute-distance-between-mirror-pairs/description/?envType=daily-question&envId=2026-04-17
+
+Approach(Hashing):
+  class Solution {
+    public int minMirrorPairDistance(int[] nums) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int res = Integer.MAX_VALUE;
+        for(int i = 0 ; i < nums.length ; i++){
+            if(map.containsKey(nums[i])){
+            res = Math.min(res,i-map.get(nums[i]));
+            }
+            map.put(reverse(nums[i]),i);
+        }
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+    public int reverse(int n){
+        int x = 0;
+        while(n != 0){
+            int k = n % 10;
+            x = x*10 + k;
+            n/=10;
+        }
+        return x;
+    }
+}
