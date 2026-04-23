@@ -23,3 +23,29 @@ Approach(Hashing):
         return x;
     }
 }
+Approach-2:
+class Solution {
+    public int minMirrorPairDistance(int[] nums) {
+        int n = nums.length;
+        int ans = n;
+        HashMap<Integer,Integer> map = new HashMap<>(n,1.0f);
+        for(int j = 0 ; j < n ; j++){
+            int x = nums[j];
+            Integer i = map.get(x);
+            if(i != null){
+                ans = Math.min(ans,j-i);
+            }
+            map.put(reverse(nums[j]),j);
+        }
+        return ans == n ? -1 : ans;
+    }
+    public int reverse(int n){
+        int x = 0;
+        while(n != 0){
+            int k = n % 10;
+            x = x*10 + k;
+            n/=10;
+        }
+        return x;
+    }
+}
