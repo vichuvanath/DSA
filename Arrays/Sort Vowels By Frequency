@@ -1,0 +1,53 @@
+https://leetcode.com/problems/sort-vowels-by-frequency/description/
+
+Approach:
+ class Solution {
+    public String sortVowels(String s) {
+       int[] freq = new int[26];
+       int[] firstOcc = new int[26];
+       Arrays.fill(firstOcc,-1);
+       int totVow = 0;
+       int n = s.length();
+       char[] arr = s.toCharArray();
+       for(int i = 0 ; i < n ; i++){
+        if(isVowel(arr[i])){
+            freq[arr[i]-'a']++;
+            }
+        if(firstOcc[arr[i]-'a'] == -1){
+            firstOcc[arr[i]-'a'] = i;
+        }
+        totVow++;
+          }
+        if(totVow == 0){
+            return s;
+        }
+       List<int[]> vowStats = new ArrayList<>();
+       char[] vowels = {'a','e','i','o','u'};
+       for(char v : vowels){
+        vowStats.add(new int[]{v,freq[v-'a'],firstOcc[v-'a']});
+       }
+        vowStats.sort((a,b) ->{
+            if(a[1] != b[1]){
+                return Integer.compare(b[1],a[1]);
+            }
+            return Integer.compare(a[2],b[2]);
+        });
+        char[] vowe = new char[totVow];
+        int index = 0;
+        for(int[] ax : vowStats){
+            for(int i = 0 ; i < ax[1] ; i++){
+                vowe[index++] = (char)ax[0];
+            }
+        }
+        index = 0;
+        for(int i = 0 ; i < n ; i++){
+            if(isVowel(arr[i])){
+                arr[i] = vowe[index++];
+            }
+        }
+        return new String(arr);
+    }
+    public boolean isVowel(char x){
+        return x == 'a'|| x == 'e' || x == 'i' || x == 'o' || x == 'u';
+    }
+}
