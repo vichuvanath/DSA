@@ -1,0 +1,40 @@
+https://codeforces.com/contest/2229/problem/B
+
+import java.util.*;
+public class main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int tc = scan.nextInt();
+       while(tc-- > 0){
+        int len = scan.nextInt();
+        int[] a = new int[len];
+        int[] b = new int[len];
+        for(int i = 0 ; i < len ; i++){
+            a[i] = scan.nextInt();
+        }
+        for(int j = 0 ; j < len ; j++){
+            b[j] = scan.nextInt();
+        }
+    
+        int max = 0;
+        for(int i = 0 ; i < len ; i++){
+            if(a[i] > b[i]){
+                int temp = a[i];
+                a[i] = b[i];
+                b[i] = temp;
+            }
+            max = Math.max(a[i],max);
+        }
+        long sum = 0;
+        for(int j = 0 ; j < len ; j++){
+            sum+=b[j];
+        }
+        System.out.println(sum + max);
+       }
+    }
+    public static void swap(int a , int b){
+        int temp = a;
+        a = b;
+        b = temp;
+    }
+}
