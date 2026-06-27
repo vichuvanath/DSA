@@ -1,0 +1,77 @@
+https://codeforces.com/contest/2237/problem/B
+
+
+Code:
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        FastScanner fs = new FastScanner();
+        int tc = fs.nextInt();
+        while (tc-- > 0) {
+            int n = fs.nextInt();
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++) {
+                a[i] = fs.nextInt();
+            }
+            int[] b = new int[n];
+            for (int i = 0; i < n; i++) {
+                b[i] = fs.nextInt();
+            }
+
+            int[] a_sorted = a.clone();
+            Arrays.sort(a_sorted);
+            boolean possible = true;
+            for (int i = 0; i < n; i++) {
+                if (a_sorted[i] > b[i]) {
+                    possible = false;
+                    break;
+                }
+            }
+
+            if (!possible) {
+                System.out.println("-1");
+                continue;
+            }
+
+            boolean[] used = new boolean[n];
+            long swaps = 0;
+            for (int i = 0; i < n; i++) {
+                int target = b[i];
+                int chosen_j = -1;
+                int unused_before = 0;
+                for (int j = 0; j < n; j++) {
+                    if (!used[j]) {
+                        if (a[j] <= target) {
+                            chosen_j = j;
+                            break;
+                        }
+                        unused_before++;
+                    }
+                }
+                used[chosen_j] = true;
+                swaps += unused_before;
+            }
+            
+            System.out.println(swaps);
+        }
+    }
+    static class FastScanner {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer("");
+        String next() {
+            while (!st.hasMoreTokens()) {
+                try {
+                    String line = br.readLine();
+                    if (line == null) return null;
+                    st = new StringTokenizer(line);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+    }
+}
